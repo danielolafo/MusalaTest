@@ -1,0 +1,37 @@
+CREATE TABLE Drone(
+id NUMBER NOT NULL,
+serial_number VARCHAR(100),
+model VARCHAR2(50),
+weight NUMBER(3,2),
+battery_percentage NUMBER(2,2),
+state VARCHAR2(50)
+);
+
+CREATE TABLE Medicine(
+id NUMBER NOT NULL,
+name VARCHAR2(50),
+weigth NUMBER(3,2),
+code VARCHAR2(50),
+image BLOB
+);
+
+INSERT INTO Drone VALUES(1,"","",500,10.0,"");
+INSERT INTO Drone VALUES(2,"","",500,10.0,"");
+INSERT INTO Drone VALUES(3,"","",500,10.0,"");
+INSERT INTO Drone VALUES(4,"","",500,10.0,"");
+INSERT INTO Drone VALUES(5,"","",500,10.0,"");
+INSERT INTO Drone VALUES(6,"","",500,10.0,"");
+INSERT INTO Drone VALUES(7,"","",500,10.0,"");
+INSERT INTO Drone VALUES(8,"","",500,10.0,"");
+INSERT INTO Drone VALUES(9,"","",500,10.0,"");
+INSERT INTO Drone VALUES(10,"","",500,10.0,"");
+
+INSERT INTO Medicine VALUES(1,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(2,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(3,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(4,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(5,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(6,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(7,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(8,"",0.05,"",NULL);
+INSERT INTO Medicine VALUES(9,"",0.05,"",NULL);
