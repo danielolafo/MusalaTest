@@ -12,7 +12,7 @@ public enum DroneState {
 	RETURNING(BigDecimal.valueOf(6),"RETURNING");
 	
 	private DroneState(BigDecimal code, String name) {
-		this.stateCode = stateCode;
+		this.stateCode = code;
 		this.stateName=name;
 	}
 	

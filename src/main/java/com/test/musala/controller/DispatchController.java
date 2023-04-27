@@ -7,19 +7,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.musala.dto.DroneDto;
 import com.test.musala.dto.MedicineDto;
+import com.test.musala.service.IDroneDispatcherService;
 
 @RestController
 @RequestMapping("dispatcher")
 public class DispatchController {
 	
+	private IDroneDispatcherService dispatcherService;
+	
+	public DispatchController(IDroneDispatcherService dispatcherService) {
+		this.dispatcherService = dispatcherService;
+	}
+	
 	@PostMapping("register-drone")
-	public ResponseEntity<DroneDto> registerDrone(DroneDto droneDto) {
-		return null;
+	public ResponseEntity<DroneDto> registerDrone(@RequestBody DroneDto droneDto) {
+		return dispatcherService.registerDrone(droneDto);
 	}
 	
 	@PutMapping("load-medicine/{droneId}")
