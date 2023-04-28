@@ -1,15 +1,23 @@
 package com.test.musala.dto;
 
-import com.test.musala.enums.DroneModel;
-import com.test.musala.enums.DroneState;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 public class DroneDto {
 	
 	private  String serialNumber;
 	private String model;
+	
+	@Max(value=500, message="El peso no puede superar los 500 kg")
+	@Min(value=0, message="El peso no puede ser negativo")
 	private Double weightLimit;
+	
+	@Max(value=100)
+	@Min(value=0)
 	private Double batteryPercentage;
+	
 	private String state;
+	
 	public String getSerialNumber() {
 		return serialNumber;
 	}

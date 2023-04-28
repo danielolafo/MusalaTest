@@ -3,8 +3,11 @@ package com.test.musala.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +29,7 @@ public class DispatchController {
 	}
 	
 	@PostMapping("register-drone")
-	public ResponseEntity<DroneDto> registerDrone(@RequestBody DroneDto droneDto) {
+	public ResponseEntity<DroneDto> registerDrone(@Valid @RequestBody DroneDto droneDto) {
 		return dispatcherService.registerDrone(droneDto);
 	}
 	
@@ -42,12 +45,12 @@ public class DispatchController {
 	
 	@GetMapping("get-available-drones")
 	public ResponseEntity<List<DroneDto>> checkAvailableDrones() {
-		return null;
+		return this.dispatcherService.checkAvailableDrones();
 	}
 	
 	@GetMapping("get-battery-level/{droneId}")
-	public ResponseEntity<Double> checkBatteryLevel(BigDecimal droneId) {
-		return null;
+	public ResponseEntity<Double> checkBatteryLevel(@PathVariable("droneId") BigDecimal droneId) {
+		return this.dispatcherService.checkBatteryLevel(droneId);
 	}
 
 }

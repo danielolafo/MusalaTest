@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS DroneFlight;
 
 
 CREATE TABLE Drone(
-id NUMERIC AUTO_INCREMENT NOT NULL,
+id NUMERIC AUTO_INCREMENT NOT NULL PRIMARY KEY,
 serial_number VARCHAR(100),
 model VARCHAR2(50),
 weight_limit NUMERIC(5,2) NOT NULL ,
@@ -31,6 +31,8 @@ CREATE TABLE DroneCharge(
     medicine_id NUMERIC NOT NULL,
     dispatched_amount NUMERIC(3,2) NOT NULL
 );
+
+ALTER TABLE DroneCharge ADD FOREIGN KEY (drone_id) REFERENCES Drone(id);
 
 CREATE TABLE DroneFlight(
     id NUMERIC NOT NULL,
