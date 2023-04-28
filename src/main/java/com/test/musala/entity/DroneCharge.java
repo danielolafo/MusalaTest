@@ -16,6 +16,9 @@ public class DroneCharge {
 	@Column(name="drone_id")
 	private BigDecimal droneId;
 	
+	@Column(name="drone_flight_id")
+	private BigDecimal droneFlightId;
+	
 	@Column(name="medicine_id")
 	private BigDecimal medicineId;
 	
@@ -52,6 +55,14 @@ public class DroneCharge {
 
 	public void setDispatchedAmount(Double dispatchedAmount) {
 		this.dispatchedAmount = dispatchedAmount;
+	}
+
+	public BigDecimal getDroneFlightId() {
+		return droneFlightId;
+	}
+
+	public void setDroneFlightId(BigDecimal droneFlightId) {
+		this.droneFlightId = droneFlightId;
 	}
 	
 	

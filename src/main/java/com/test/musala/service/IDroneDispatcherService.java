@@ -7,19 +7,19 @@ import org.springframework.http.ResponseEntity;
 
 import com.test.musala.dto.DroneDto;
 import com.test.musala.dto.MedicineDto;
+import com.test.musala.dto.ResponseDto;
 
 public interface IDroneDispatcherService {
 
 
-	ResponseEntity<DroneDto> registerDrone(DroneDto droneDto);
+	ResponseEntity<ResponseDto<DroneDto>> registerDrone(DroneDto droneDto);
 
-	ResponseEntity<DroneDto> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine);
+	ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine);
 
-	ResponseEntity<Boolean> checkLoad(BigDecimal droneId);
+	ResponseEntity<ResponseDto<Boolean>> checkLoad(BigDecimal droneId);
 
+	ResponseEntity<ResponseDto<Double>> checkBatteryLevel(BigDecimal droneId);
 
-	ResponseEntity<Double> checkBatteryLevel(BigDecimal droneId);
-
-	ResponseEntity<List<DroneDto>> checkAvailableDrones();
+	ResponseEntity<ResponseDto<List<DroneDto>>> checkAvailableDrones();
 
 }

@@ -1,10 +1,13 @@
 package com.test.musala.dto;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 public class DroneDto {
 	
+	private BigDecimal id;
 	private  String serialNumber;
 	private String model;
 	
@@ -18,6 +21,13 @@ public class DroneDto {
 	
 	private String state;
 	
+	
+	public BigDecimal getId() {
+		return id;
+	}
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
 	public String getSerialNumber() {
 		return serialNumber;
 	}

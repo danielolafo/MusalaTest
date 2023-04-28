@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.musala.dto.DroneDto;
 import com.test.musala.dto.MedicineDto;
+import com.test.musala.dto.ResponseDto;
 import com.test.musala.service.IDroneDispatcherService;
 
 @RestController
@@ -29,27 +30,28 @@ public class DispatchController {
 	}
 	
 	@PostMapping("register-drone")
-	public ResponseEntity<DroneDto> registerDrone(@Valid @RequestBody DroneDto droneDto) {
+	public ResponseEntity<ResponseDto<DroneDto>> registerDrone(@Valid @RequestBody DroneDto droneDto) {
 		return dispatcherService.registerDrone(droneDto);
 	}
 	
 	@PutMapping("load-medicine/{droneId}")
-	public ResponseEntity<DroneDto> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine) {
-		return null;
+	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine) {
+		return dispatcherService.loadMedicione(droneId, medicine);
 	}
 	
 	@GetMapping("check-load/{droneId}")
-	public ResponseEntity<Boolean> checkLoad(BigDecimal droneId) {
-		return null;
+	public ResponseEntity<ResponseDto<Boolean>> checkLoad(BigDecimal droneId) {
+		return dispatcherService.checkLoad(droneId);
+		
 	}
 	
 	@GetMapping("get-available-drones")
-	public ResponseEntity<List<DroneDto>> checkAvailableDrones() {
+	public ResponseEntity<ResponseDto<List<DroneDto>>> checkAvailableDrones() {
 		return this.dispatcherService.checkAvailableDrones();
 	}
 	
 	@GetMapping("get-battery-level/{droneId}")
-	public ResponseEntity<Double> checkBatteryLevel(@PathVariable("droneId") BigDecimal droneId) {
+	public ResponseEntity<ResponseDto<Double>> checkBatteryLevel(@PathVariable("droneId") BigDecimal droneId) {
 		return this.dispatcherService.checkBatteryLevel(droneId);
 	}
 
