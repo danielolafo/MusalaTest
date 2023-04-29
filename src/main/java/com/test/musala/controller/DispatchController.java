@@ -29,28 +29,28 @@ public class DispatchController {
 		this.dispatcherService = dispatcherService;
 	}
 	
-	@PostMapping("register-drone")
+	@PostMapping("/register-drone")
 	public ResponseEntity<ResponseDto<DroneDto>> registerDrone(@Valid @RequestBody DroneDto droneDto) {
 		return dispatcherService.registerDrone(droneDto);
 	}
 	
-	@PutMapping("load-medicine/{droneId}")
+	@PutMapping("/load-medicine/{droneId}")
 	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine) {
 		return dispatcherService.loadMedicione(droneId, medicine);
 	}
 	
-	@GetMapping("check-load/{droneId}")
-	public ResponseEntity<ResponseDto<Boolean>> checkLoad(BigDecimal droneId) {
+	@GetMapping("/check-load/{droneId}")
+	public ResponseEntity<ResponseDto<Boolean>> checkLoad(@PathVariable("droneId") BigDecimal droneId) {
 		return dispatcherService.checkLoad(droneId);
 		
 	}
 	
-	@GetMapping("get-available-drones")
+	@GetMapping("/get-available-drones")
 	public ResponseEntity<ResponseDto<List<DroneDto>>> checkAvailableDrones() {
 		return this.dispatcherService.checkAvailableDrones();
 	}
 	
-	@GetMapping("get-battery-level/{droneId}")
+	@GetMapping("/get-battery-level/{droneId}")
 	public ResponseEntity<ResponseDto<Double>> checkBatteryLevel(@PathVariable("droneId") BigDecimal droneId) {
 		return this.dispatcherService.checkBatteryLevel(droneId);
 	}

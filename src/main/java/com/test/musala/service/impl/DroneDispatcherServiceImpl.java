@@ -37,6 +37,7 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 		this.droneRepository=droneRepository;
 		this.droneChargeService=droneChargeService;
 		this.medicineService=medicineService;
+		this.droneFlightService=droneFlightService;
 	}
 
 	@Override
