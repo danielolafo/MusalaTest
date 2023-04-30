@@ -119,4 +119,15 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<ResponseDto<List<DroneDto>>> getAllDrones() {
+		List<DroneDto> lstDronesDto = new ArrayList<>();
+		this.droneRepository.findAll().stream().forEach(drone->{
+			lstDronesDto.add(DroneMapper.INSTANCE.entityToDto(drone));
+		});
+		return new ResponseEntity<>(
+				new ResponseDto<>(lstDronesDto), 
+				!lstDronesDto.isEmpty() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+	}
+
 }

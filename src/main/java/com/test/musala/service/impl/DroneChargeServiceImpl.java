@@ -27,7 +27,7 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 	
 	public final DroneChargeRepository droneChargeRepository;
 	
-	private static final Double BATTERY_LIMIT = Double.valueOf(25.0);
+	public static final Double BATTERY_LIMIT = Double.valueOf(25.0);
 	private static final BigDecimal LOAD_EXCEED = BigDecimal.valueOf(1);
 	private static final BigDecimal INSUFICIENT_BATTERY = BigDecimal.valueOf(2);
 	private static final BigDecimal NORMAL_CODE = BigDecimal.valueOf(0);
