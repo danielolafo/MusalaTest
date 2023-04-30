@@ -63,6 +63,7 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 		if(responseFlight.hasBody() && Objects.nonNull(responseFlight.getBody())) {
 			droneFlightDto = responseFlight.getBody();
 			resp = this.saveAllChargeInfo(droneFlightDto.getId(), lstMedicines);
+			resp = Boolean.TRUE;
 		}else {
 			droneFlightDto = new DroneFlightDto();
 			droneFlightDto.setDroneId(droneId);
@@ -71,6 +72,7 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 			droneFlightDto.setDispatchedDate(new Date());
 			this.droneFlightService.create(droneFlightDto);
 			this.saveAllChargeInfo(droneId, lstMedicines);
+			resp= Boolean.TRUE;
 		}
 		return new ResponseEntity<>(new ResponseDto<>(resp),HttpStatus.OK);
 	}
@@ -103,9 +105,9 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 		BigDecimal result = this.validateBattery(drone).add(this.validateLoadWeight(drone,lstMedicineDto));
 		switch(result.intValue()) {
 		case 1:
-			throw new Exception("The load weight exceeds maximum drone weight limit");
+			throw new Exception("The load weight exceeds maximum drone weight limit. Drone weight limit : "+drone.getWeightLimit());
 		case 2:
-			throw new Exception("The battery level for this delivery is insuficient. The batter level must be greater than 25%");
+			throw new Exception("The battery level for this delivery is insuficient. The batter level must be greater than 25%. Current battery level : "+drone.getBatteryPercentage());
 		case 3:
 			throw new Exception("The drone medicines could not be loaded");
 		default:
