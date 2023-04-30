@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.test.musala.dto.DroneDto;
 import com.test.musala.dto.MedicineDto;
+import com.test.musala.dto.MedicineRequestDto;
 import com.test.musala.dto.ResponseDto;
 import com.test.musala.entity.Drone;
+import com.test.musala.enums.DroneState;
 import com.test.musala.mapper.DroneMapper;
 import com.test.musala.repository.DroneRepository;
 import com.test.musala.service.IDroneChargeService;
@@ -49,9 +51,13 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine) {
+	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, MedicineRequestDto medicineRequestDto) {
+		if(!this.isAvailableDrone(droneId)) {
+			return new ResponseEntity<>(new ResponseDto<>(new DroneDto(),"The drone is not available for load"), HttpStatus.CONFLICT);
+		}
+		
 		Drone drone = new Drone();
-		Double newTotalWeight = medicine.stream().mapToDouble(med ->
+		Double newTotalWeight = medicineRequestDto.getLstMedicines().stream().mapToDouble(med ->
 			med.getWeight()).sum();
 		Optional<Drone> droneOpt = droneRepository.findById(droneId);
 		if(droneOpt.isPresent()) {
@@ -63,8 +69,8 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 			}
 			
 		}
-		String message = Objects.nonNull(drone.getId()) ? null : "Drone information not found"; 
-		Boolean saved = this.updateFlightCharge(droneId, medicine);
+		String message = Objects.nonNull(drone.getId()) ? "Success" : "Drone information not found"; 
+		Boolean saved = this.updateFlightCharge(droneId, medicineRequestDto.getLstMedicines());
 		return new ResponseEntity<>(new ResponseDto<>(DroneMapper.INSTANCE.entityToDto(drone),message), saved ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 	}
 	
@@ -128,6 +134,19 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 		return new ResponseEntity<>(
 				new ResponseDto<>(lstDronesDto), 
 				!lstDronesDto.isEmpty() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+	}
+	
+	private Boolean isAvailableDrone(BigDecimal droneId) {
+		Optional<Drone> droneOpt = this.droneRepository.findById(droneId);
+		if(droneOpt.isPresent()) {
+			return this.validateDroneState(droneOpt.get());
+		}else {
+			return Boolean.FALSE;
+		}
+	}
+	
+	private Boolean validateDroneState(Drone drone) {
+		return drone.getState().equals(DroneState.IDLE.getStateName());
 	}
 
 }

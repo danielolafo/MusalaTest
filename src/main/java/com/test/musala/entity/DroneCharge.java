@@ -4,17 +4,18 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class DroneCharge {
 	
 	@Id
 	@Column(name="id")
+	@GeneratedValue(generator="SEQ_DRONE_CHARGE")
+	@SequenceGenerator(name="SEQ_DRONE_CHARGE",sequenceName="SEQ_DRONE_CHARGE", allocationSize=1)
 	private BigDecimal id;
-	
-	@Column(name="drone_id")
-	private BigDecimal droneId;
 	
 	@Column(name="drone_flight_id")
 	private BigDecimal droneFlightId;
@@ -33,13 +34,6 @@ public class DroneCharge {
 		this.id = id;
 	}
 
-	public BigDecimal getDroneId() {
-		return droneId;
-	}
-
-	public void setDroneId(BigDecimal droneId) {
-		this.droneId = droneId;
-	}
 
 	public BigDecimal getMedicineId() {
 		return medicineId;

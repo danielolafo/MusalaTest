@@ -5,13 +5,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class DroneFlight {
 	
 	@Id
 	@Column(name="id")
+	@GeneratedValue(generator="SEQ_DRONE_FLIGHT")
+	@SequenceGenerator(name="SEQ_DRONE_FLIGHT",sequenceName="SEQ_DRONE_FLIGHT", allocationSize=1)
 	private BigDecimal id;
 	
 	@Column(name="dispatched_date")

@@ -4,12 +4,17 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Medicine {
 	
 	@Id
+	@GeneratedValue(generator="SEQ_MEDICINE")
+	@SequenceGenerator(name="SEQ_MEDICINE",sequenceName="SEQ_MEDICINE", allocationSize=1)
 	@Column(name="id")
 	private BigDecimal id;
 	

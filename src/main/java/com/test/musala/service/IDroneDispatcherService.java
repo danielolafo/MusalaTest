@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.test.musala.dto.DroneDto;
-import com.test.musala.dto.MedicineDto;
+import com.test.musala.dto.MedicineRequestDto;
 import com.test.musala.dto.ResponseDto;
 
 public interface IDroneDispatcherService {
@@ -14,7 +14,7 @@ public interface IDroneDispatcherService {
 
 	public ResponseEntity<ResponseDto<DroneDto>> registerDrone(DroneDto droneDto);
 
-	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine);
+	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, MedicineRequestDto medicineRequestDto);
 
 	public ResponseEntity<ResponseDto<Boolean>> checkLoad(BigDecimal droneId);
 

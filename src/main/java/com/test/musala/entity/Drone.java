@@ -5,17 +5,15 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.test.musala.enums.DroneModel;
-import com.test.musala.enums.DroneState;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Drone {
     
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="SEQ_DRONE")
+	@SequenceGenerator(name="SEQ_DRONE",sequenceName="SEQ_DRONE", allocationSize=1)
 	@Column(name="id")
 	private BigDecimal id;
 	

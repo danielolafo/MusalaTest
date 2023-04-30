@@ -12,7 +12,7 @@ import com.test.musala.entity.Medicine;
 @Repository
 public interface MedicineRepository extends JpaRepository<Medicine, BigDecimal>{
 	
-	@Query(value="SELECT m.* FROM Medicine m JOIN DroneCharge dc ON m.id=dc.medicine_id JOIN DroneFlight df ON dc.drone_Flight_Id=df.id WHERE df.drone_id = ?1 AND df.arrival_date IS NULL", nativeQuery=true)
+	@Query(value="SELECT m.* FROM Medicine m JOIN Drone_Charge dc ON m.id=dc.medicine_id JOIN Drone_Flight df ON dc.drone_Flight_Id=df.id WHERE df.drone_id = ?1 AND df.arrival_date IS NULL", nativeQuery=true)
 	public List<Medicine> findCurrentItemsByDrone(BigDecimal droneId);
 
 }

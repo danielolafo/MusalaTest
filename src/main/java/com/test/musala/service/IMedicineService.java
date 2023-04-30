@@ -11,5 +11,7 @@ import com.test.musala.dto.ResponseDto;
 public interface IMedicineService {
 	
 	ResponseEntity<ResponseDto<List<MedicineDto>>> checkLoadedMedicine(BigDecimal droneId);
+	
+	public MedicineDto getMedicineById(BigDecimal id);
 
 }

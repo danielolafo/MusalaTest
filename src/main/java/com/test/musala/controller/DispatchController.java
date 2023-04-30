@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.musala.dto.DroneDto;
-import com.test.musala.dto.MedicineDto;
+import com.test.musala.dto.MedicineRequestDto;
 import com.test.musala.dto.ResponseDto;
 import com.test.musala.service.IDroneDispatcherService;
 
@@ -35,8 +35,8 @@ public class DispatchController {
 	}
 	
 	@PutMapping("/load-medicine/{droneId}")
-	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, List<MedicineDto> medicine) {
-		return dispatcherService.loadMedicione(droneId, medicine);
+	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(@PathVariable("droneId") BigDecimal droneId, @RequestBody MedicineRequestDto medicineRequestDto) {
+		return dispatcherService.loadMedicione(droneId, medicineRequestDto);
 	}
 	
 	@GetMapping("/check-load/{droneId}")
