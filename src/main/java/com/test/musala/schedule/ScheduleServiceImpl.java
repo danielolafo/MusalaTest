@@ -10,38 +10,35 @@ import org.springframework.stereotype.Service;
 import com.test.musala.dto.DroneDto;
 import com.test.musala.dto.ResponseDto;
 import com.test.musala.service.IDroneDispatcherService;
-import com.test.musala.service.impl.DroneChargeServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
-
-
 
 @Service
 @Slf4j
 public class ScheduleServiceImpl {
-	
+
 	private IDroneDispatcherService droneService;
-	
+
 	Logger logger = Logger.getLogger(ScheduleServiceImpl.class.getName());
-	
+
 	public ScheduleServiceImpl(IDroneDispatcherService droneService) {
-		this.droneService=droneService;
+		this.droneService = droneService;
 	}
-	
-	@Scheduled(fixedDelay=10000)
+
+	@Scheduled(fixedDelay = 10000)
 	public void checkDronesBattery() {
-		ResponseEntity<ResponseDto<List<DroneDto>>> response =
-				droneService.getAllDrones();
-		if(response.hasBody() && !response.getBody().getData().isEmpty()) {
-			response.getBody().getData().stream().forEach(drone->{
-				if(drone.getBatteryPercentage().compareTo(DroneChargeServiceImpl.BATTERY_LIMIT)<0) {
-					System.out.println(drone.getSerialNumber());
-					logger.info(new StringBuilder()
-							.append("The drone with id ")
-							.append(drone.getId())
-							.append(" has a low battery level. Battery: ")
-							.append(drone.getBatteryPercentage()).toString());
-				}
+		ResponseEntity<ResponseDto<List<DroneDto>>> response = droneService.getAllDrones();
+		if (response.hasBody() && !response.getBody().getData().isEmpty()) {
+			response.getBody().getData().stream().forEach(drone -> {
+
+				System.out.println(drone.getSerialNumber());
+				logger.info(new StringBuilder()
+						.append("Drone id : ")
+						.append(drone.getId())
+						.append(" Battery level : ")
+						.append(drone.getBatteryPercentage())
+						.append(" %").toString());
+
 			});
 		}
 	}
