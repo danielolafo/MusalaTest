@@ -58,7 +58,7 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 		
 		Drone drone = new Drone();
 		Double newTotalWeight = medicineRequestDto.getLstMedicines().stream().mapToDouble(med ->
-			med.getWeight()).sum();
+			med.getWeight()*med.getQuantity().doubleValue()).sum();
 		Optional<Drone> droneOpt = droneRepository.findById(droneId);
 		if(droneOpt.isPresent()) {
 			drone = droneOpt.get();
