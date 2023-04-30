@@ -52,26 +52,32 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 
 	@Override
 	public ResponseEntity<ResponseDto<DroneDto>> loadMedicione(BigDecimal droneId, MedicineRequestDto medicineRequestDto) {
-		if(!this.isAvailableDrone(droneId)) {
-			return new ResponseEntity<>(new ResponseDto<>(new DroneDto(),"The drone is not available for load"), HttpStatus.CONFLICT);
-		}
-		
-		Drone drone = new Drone();
-		Double newTotalWeight = medicineRequestDto.getLstMedicines().stream().mapToDouble(med ->
-			med.getWeight()*med.getQuantity().doubleValue()).sum();
-		Optional<Drone> droneOpt = droneRepository.findById(droneId);
-		if(droneOpt.isPresent()) {
-			drone = droneOpt.get();
-			if(newTotalWeight > drone.getWeightLimit() || (newTotalWeight + this.getCurrentDroneChargeWeight(droneId)>drone.getWeightLimit())) {
-				return new ResponseEntity<>(
-						new ResponseDto<>(new DroneDto(),"The weight exceeds drone max capacity"),
-						HttpStatus.CONFLICT);
+		try {
+			if(!this.isAvailableDrone(droneId)) {
+				return new ResponseEntity<>(new ResponseDto<>(new DroneDto(),"The drone is not available for load"), HttpStatus.CONFLICT);
 			}
 			
+			Drone drone = new Drone();
+			Double newTotalWeight = medicineRequestDto.getLstMedicines().stream().mapToDouble(med ->
+				med.getWeight()*med.getQuantity().doubleValue()).sum();
+			Optional<Drone> droneOpt = droneRepository.findById(droneId);
+			if(droneOpt.isPresent()) {
+				drone = droneOpt.get();
+				this.droneChargeService.validate(drone, medicineRequestDto.getLstMedicines());
+				//if(newTotalWeight > drone.getWeightLimit() || (newTotalWeight + this.getCurrentDroneChargeWeight(droneId)>drone.getWeightLimit())) {
+				if(newTotalWeight > drone.getWeightLimit() || (newTotalWeight + this.getCurrentDroneChargeWeight(droneId)>drone.getWeightLimit())) {
+					return new ResponseEntity<>(
+							new ResponseDto<>(new DroneDto(),"The weight exceeds drone max capacity"),
+							HttpStatus.CONFLICT);
+				}
+				
+			}
+			String message = Objects.nonNull(drone.getId()) ? "Success" : "Drone information not found"; 
+			Boolean saved = this.updateFlightCharge(droneId, medicineRequestDto.getLstMedicines());
+			return new ResponseEntity<>(new ResponseDto<>(DroneMapper.INSTANCE.entityToDto(drone),message), saved ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto<>(new DroneDto(),e.getMessage()), HttpStatus.CONFLICT);
 		}
-		String message = Objects.nonNull(drone.getId()) ? "Success" : "Drone information not found"; 
-		Boolean saved = this.updateFlightCharge(droneId, medicineRequestDto.getLstMedicines());
-		return new ResponseEntity<>(new ResponseDto<>(DroneMapper.INSTANCE.entityToDto(drone),message), saved ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 	}
 	
 	private Boolean updateFlightCharge(BigDecimal droneId, List<MedicineDto> medicine) {

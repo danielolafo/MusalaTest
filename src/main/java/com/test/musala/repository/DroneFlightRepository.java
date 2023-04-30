@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.test.musala.entity.DroneFlight;
@@ -18,7 +19,10 @@ public interface DroneFlightRepository extends JpaRepository<DroneFlight, BigDec
 	
 	public List<DroneFlight> findByArrivalDate(Date arrivalDate);
 	
-	@Query("SELECT df FROM DroneFlight df WHERE df.id = :droneId AND df.arrivalDate = null")
+	//@Query("SELECT df FROM DroneFlight df WHERE df.id = :droneId AND df.arrivalDate IS null")
+	//public Optional<DroneFlight> getCurrentDroneFlight(@Param("droneId") BigDecimal droneId);
+	
+	@Query(value="SELECT * FROM Drone_Flight df  WHERE df.drone_id = ?1 AND df.arrival_Date IS null", nativeQuery=true)
 	public Optional<DroneFlight> getCurrentDroneFlight(BigDecimal droneId);
 
 }

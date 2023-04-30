@@ -90,13 +90,24 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 		}
 	}
 	
-	private void validate(Drone drone) throws Exception {
-		BigDecimal result = this.validateBattery(drone).add(this.validateLoadWeight(drone));
+	/**
+	 * Validate if the battery level of the drone is insuficient or the
+	 * total load weight exceeds the drone weight limit.
+	 * If battery of weight validation failed, throws an exception with 
+	 * the correspondign message.
+	 * If battery level is enough of total load weight is under the limit,
+	 * method does nothing.
+	 */
+	@Override
+	public void validate(Drone drone, List<MedicineDto> lstMedicineDto) throws Exception {
+		BigDecimal result = this.validateBattery(drone).add(this.validateLoadWeight(drone,lstMedicineDto));
 		switch(result.intValue()) {
 		case 1:
 			throw new Exception("The load weight exceeds maximum drone weight limit");
 		case 2:
 			throw new Exception("The battery level for this delivery is insuficient. The batter level must be greater than 25%");
+		case 3:
+			throw new Exception("The drone medicines could not be loaded");
 		default:
 			break;
 		}
@@ -106,6 +117,7 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 		return drone.getBatteryPercentage().compareTo(DroneChargeServiceImpl.BATTERY_LIMIT)<0 ? DroneChargeServiceImpl.INSUFICIENT_BATTERY: DroneChargeServiceImpl.NORMAL_CODE;
 	}
 	
+	
 	/**
 	 * Validate the current added items total weight plus new items total weight.
 	 * If maximum drone weight limit is exceeded, then return LOAD_EXCEED code.
@@ -113,10 +125,17 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 	 * @param drone
 	 * @return
 	 */
-	private BigDecimal validateLoadWeight(Drone drone) {
-		return getCurrentLoadWeight(drone).compareTo(BigDecimal.valueOf(drone.getWeightLimit()))>0 ? DroneChargeServiceImpl.LOAD_EXCEED: BigDecimal.ZERO;
+	private BigDecimal validateLoadWeight(Drone drone, List<MedicineDto> lstMedicineDto) {
+		BigDecimal newItemsTotalWeight = getNewItemsWeight(lstMedicineDto);
+		BigDecimal currentAndNewTotalWeight = getCurrentLoadWeight(drone).add(newItemsTotalWeight);
+		return currentAndNewTotalWeight.compareTo(BigDecimal.valueOf(drone.getWeightLimit()))>0 ? DroneChargeServiceImpl.LOAD_EXCEED: BigDecimal.ZERO;
 	}
 	
+	/**
+	 * Returns the total weight of the current loaded medicine items in the drone
+	 * @param drone
+	 * @return
+	 */
 	public BigDecimal getCurrentLoadWeight(Drone drone) {
 		BigDecimal currentTotalWeight = BigDecimal.valueOf(0);
 		ResponseEntity<DroneFlightDto> responseFlight = 
@@ -125,16 +144,27 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 			List<DroneCharge> lstCharges = this.droneChargeRepository
 			.findByDroneFlightId(responseFlight.getBody().getId());
 			for(DroneCharge charge : lstCharges) {
-				currentTotalWeight.add(BigDecimal.valueOf(charge.getDispatchedAmount()*this.medicineService.getMedicineById(charge.getMedicineId()).getWeight()));
+				currentTotalWeight = currentTotalWeight.add(BigDecimal.valueOf(charge.getDispatchedAmount()*this.medicineService.getMedicineById(charge.getMedicineId()).getWeight()));
 			}
 		}
 		return currentTotalWeight;
 	}
 	
+	/**
+	 * Returns the total weight of the new medicine to be loaded on the drone
+	 * @param lstMedicinesDto
+	 * @return
+	 */
 	public BigDecimal getNewItemsWeight(List<MedicineDto> lstMedicinesDto) {
 		Double newTotalWeight = lstMedicinesDto.stream().mapToDouble(item -> 
 			item.getWeight()*item.getQuantity().doubleValue()).sum();
 		return BigDecimal.valueOf(newTotalWeight);
+	}
+
+	@Override
+	public void validate(Drone drone) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

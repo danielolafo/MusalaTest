@@ -81,17 +81,17 @@ INSERT INTO Medicine (id, name, weight, code, image) VALUES(NEXTVAL('SEQ_MEDICIN
 INSERT INTO Medicine (id, name, weight, code, image) VALUES(NEXTVAL('SEQ_MEDICINE'),'Lovastatina',5,'',NULL);
 INSERT INTO Medicine (id, name, weight, code, image) VALUES(NEXTVAL('SEQ_MEDICINE'),'Salbutamol',5,'',NULL);
 
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,1);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,1);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'','',NULL,1);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,1);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,2);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'','',NULL,2);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,2);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'','',NULL,3);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'','',NULL,3);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,4);
-INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','','',NULL,4);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','Street 123','London Avenue',NULL,1);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','Street 45','Street 26',NULL,1);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'Street 99','Street 66',NULL,1);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','Street 76','Street 1',NULL,1);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','Street 1','Street 89',NULL,2);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'Park Avenue','Street 585',NULL,2);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','Street 66','Park Avenue',NULL,2);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20',NULL,'Street 12','Street 55',NULL,3);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2023-02-22','Street 48','Street 67',NULL,3);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','Berlin St.','Rome square',NULL,4);
+INSERT INTO Drone_Flight (id,dispatched_date,arrival_date,origin,target,observations,drone_id) VALUES(NEXTVAL('SEQ_DRONE_FLIGHT'),'2022-01-20','2022-02-17','St. 5','St. 88',NULL,4);
 
 INSERT INTO Drone_Charge(id, drone_flight_id,medicine_id,dispatched_amount) VALUES(NEXTVAL('SEQ_DRONE_CHARGE'),3,3,50.0);
 INSERT INTO Drone_Charge(id, drone_flight_id,medicine_id,dispatched_amount) VALUES(NEXTVAL('SEQ_DRONE_CHARGE'),3,3,10.0);

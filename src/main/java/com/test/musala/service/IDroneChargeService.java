@@ -7,11 +7,16 @@ import org.springframework.http.ResponseEntity;
 
 import com.test.musala.dto.MedicineDto;
 import com.test.musala.dto.ResponseDto;
+import com.test.musala.entity.Drone;
 
 public interface IDroneChargeService {
 	
 	public ResponseEntity<Double> getTotalChargeByFlight(BigDecimal droneFlightId);
 
 	ResponseEntity<ResponseDto<Boolean>> updateCharge(BigDecimal droneId, List<MedicineDto> lstMedicines);
+
+	void validate(Drone drone) throws Exception;
+	
+	void validate(Drone drone, List<MedicineDto> lstMedicineDtos) throws Exception;
 
 }
