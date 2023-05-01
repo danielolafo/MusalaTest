@@ -29,17 +29,20 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 	private IDroneChargeService droneChargeService;
 	private IDroneFlightService droneFlightService;
 	private IMedicineService medicineService;
+	private DroneStateServiceImpl droneStateService;
 	
 	private DroneRepository droneRepository;
 	
 	public DroneDispatcherServiceImpl(DroneRepository droneRepository, 
 			IDroneChargeService droneChargeService,
 			IDroneFlightService droneFlightService,
-			IMedicineService medicineService) {
+			IMedicineService medicineService,
+			DroneStateServiceImpl droneStateService) {
 		this.droneRepository=droneRepository;
 		this.droneChargeService=droneChargeService;
 		this.medicineService=medicineService;
 		this.droneFlightService=droneFlightService;
+		this.droneStateService = droneStateService;
 	}
 
 	@Override
@@ -64,7 +67,6 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 			if(droneOpt.isPresent()) {
 				drone = droneOpt.get();
 				this.droneChargeService.validate(drone, medicineRequestDto.getLstMedicines());
-				//if(newTotalWeight > drone.getWeightLimit() || (newTotalWeight + this.getCurrentDroneChargeWeight(droneId)>drone.getWeightLimit())) {
 				if(newTotalWeight > drone.getWeightLimit() || (newTotalWeight + this.getCurrentDroneChargeWeight(droneId)>drone.getWeightLimit())) {
 					return new ResponseEntity<>(
 							new ResponseDto<>(new DroneDto(),"The weight exceeds drone max capacity"),
@@ -74,6 +76,7 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 			}
 			String message = Objects.nonNull(drone.getId()) ? "Success" : "Drone information not found"; 
 			Boolean saved = this.updateFlightCharge(droneId, medicineRequestDto);
+			drone.setState(this.droneStateService.getDroneState(drone.getState()).nextState().getStateName());
 			return new ResponseEntity<>(new ResponseDto<>(DroneMapper.INSTANCE.entityToDto(drone),message), saved ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 		}catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto<>(new DroneDto(),e.getMessage()), HttpStatus.CONFLICT);
