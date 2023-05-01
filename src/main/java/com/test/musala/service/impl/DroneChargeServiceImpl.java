@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.test.musala.dto.DroneFlightDto;
 import com.test.musala.dto.MedicineDto;
+import com.test.musala.dto.MedicineRequestDto;
 import com.test.musala.dto.ResponseDto;
 import com.test.musala.entity.Drone;
 import com.test.musala.entity.DroneCharge;
-import com.test.musala.enums.DroneState;
 import com.test.musala.repository.DroneChargeRepository;
-import com.test.musala.repository.DroneRepository;
 import com.test.musala.service.IDroneChargeService;
 import com.test.musala.service.IDroneFlightService;
 import com.test.musala.service.IMedicineService;
@@ -55,23 +53,23 @@ public class DroneChargeServiceImpl implements IDroneChargeService{
 	}
 	
 	@Override
-	public ResponseEntity<ResponseDto<Boolean>> updateCharge(BigDecimal droneId, List<MedicineDto> lstMedicines){
+	public ResponseEntity<ResponseDto<Boolean>> updateCharge(BigDecimal droneId, MedicineRequestDto medicineRequestDto){
 		Boolean resp = Boolean.FALSE;
 		
 		DroneFlightDto droneFlightDto = new DroneFlightDto(); 
 		ResponseEntity<DroneFlightDto> responseFlight = this.droneFlightService.getCurrentDroneFlight(droneId);
-		if(responseFlight.hasBody() && Objects.nonNull(responseFlight.getBody())) {
+		if(responseFlight.hasBody() && Objects.nonNull(responseFlight.getBody().getId())) {
 			droneFlightDto = responseFlight.getBody();
-			resp = this.saveAllChargeInfo(droneFlightDto.getId(), lstMedicines);
+			resp = this.saveAllChargeInfo(droneFlightDto.getId(), medicineRequestDto.getLstMedicines());
 			resp = Boolean.TRUE;
 		}else {
 			droneFlightDto = new DroneFlightDto();
 			droneFlightDto.setDroneId(droneId);
-			droneFlightDto.setOrigin(null);
-			droneFlightDto.setTarget(null);
+			droneFlightDto.setOrigin(medicineRequestDto.getOrigin());
+			droneFlightDto.setTarget(medicineRequestDto.getTarget());
 			droneFlightDto.setDispatchedDate(new Date());
-			this.droneFlightService.create(droneFlightDto);
-			this.saveAllChargeInfo(droneId, lstMedicines);
+			ResponseEntity<ResponseDto<DroneFlightDto>> droneFlightResponse = this.droneFlightService.create(droneFlightDto);
+			this.saveAllChargeInfo(droneFlightResponse.getBody().getData().getId(), medicineRequestDto.getLstMedicines());
 			resp= Boolean.TRUE;
 		}
 		return new ResponseEntity<>(new ResponseDto<>(resp),HttpStatus.OK);

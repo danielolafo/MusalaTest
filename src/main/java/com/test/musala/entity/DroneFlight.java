@@ -76,6 +76,22 @@ public class DroneFlight {
 	public void setObservations(String observations) {
 		this.observations = observations;
 	}
+
+	public Date getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public BigDecimal getDroneId() {
+		return droneId;
+	}
+
+	public void setDroneId(BigDecimal droneId) {
+		this.droneId = droneId;
+	}
 	
 	
 

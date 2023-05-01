@@ -73,15 +73,15 @@ public class DroneDispatcherServiceImpl implements IDroneDispatcherService {
 				
 			}
 			String message = Objects.nonNull(drone.getId()) ? "Success" : "Drone information not found"; 
-			Boolean saved = this.updateFlightCharge(droneId, medicineRequestDto.getLstMedicines());
+			Boolean saved = this.updateFlightCharge(droneId, medicineRequestDto);
 			return new ResponseEntity<>(new ResponseDto<>(DroneMapper.INSTANCE.entityToDto(drone),message), saved ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 		}catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto<>(new DroneDto(),e.getMessage()), HttpStatus.CONFLICT);
 		}
 	}
 	
-	private Boolean updateFlightCharge(BigDecimal droneId, List<MedicineDto> medicine) {
-		return droneChargeService.updateCharge(droneId, medicine).getBody().getData();
+	private Boolean updateFlightCharge(BigDecimal droneId, MedicineRequestDto medicineRequestDto) {
+		return droneChargeService.updateCharge(droneId, medicineRequestDto).getBody().getData();
 	}
 	
 
