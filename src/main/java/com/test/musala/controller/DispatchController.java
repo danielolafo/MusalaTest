@@ -19,6 +19,11 @@ import com.test.musala.dto.MedicineRequestDto;
 import com.test.musala.dto.ResponseDto;
 import com.test.musala.service.IDroneDispatcherService;
 
+/**
+ * 
+ * 
+ * @author Daniel Orlando López Ochoa
+ */
 @RestController
 @RequestMapping("dispatcher")
 public class DispatchController {
