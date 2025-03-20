@@ -14,7 +14,7 @@ import com.test.musala.dto.ResponseDto;
 import com.test.musala.service.IMedicineService;
 
 /**
- * 
+ * <p>Query all information about medicines</p>
  * 
  * @author Daniel Orlando López Ochoa
  */
