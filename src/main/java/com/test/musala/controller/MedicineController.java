@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.test.musala.service.IMedicineService;
  */
 @RestController
 @RequestMapping("medicine")
+@CrossOrigin("*")
 public class MedicineController {
 	
 	private IMedicineService medicineService;
