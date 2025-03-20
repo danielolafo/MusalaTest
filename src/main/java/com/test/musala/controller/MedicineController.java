@@ -13,6 +13,11 @@ import com.test.musala.dto.MedicineDto;
 import com.test.musala.dto.ResponseDto;
 import com.test.musala.service.IMedicineService;
 
+/**
+ * 
+ * 
+ * @author Daniel Orlando López Ochoa
+ */
 @RestController
 @RequestMapping("medicine")
 public class MedicineController {
