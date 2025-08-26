@@ -1,1 +1,1 @@
-    web: java -Dserver.port=8080 -jar target/musala-1.5.jar
+web: java -Dserver.port=8080 -jar target/musala-1.5.jar
