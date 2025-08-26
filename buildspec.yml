@@ -13,5 +13,5 @@ phases:
       - mv target/*.jar musala.jar
 artifacts:
   files:
-    - target/*.jar
+    - target/musala.jar
   discard-paths: yes
