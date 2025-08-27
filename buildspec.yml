@@ -13,6 +13,5 @@ phases:
       - mv target/*.jar musala.jar
 artifacts:
   files:
-    - appspec.yml
-    - target/musala.jar
+    - '**/*'
   discard-paths: yes
