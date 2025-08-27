@@ -1,1 +1,1 @@
-web: java -jar *.jar
+web: java -jar musala-2.0.jar
