@@ -1,1 +1,0 @@
-web: java -jar musala-2.0.jar
